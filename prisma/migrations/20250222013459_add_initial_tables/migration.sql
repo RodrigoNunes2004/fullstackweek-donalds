@@ -2,7 +2,7 @@
 CREATE TYPE "OrderStatus" AS ENUM ('PENDING', 'IN_PREPARATION', 'FINISHED');
 
 -- CreateEnum
-CREATE TYPE "ConsumptionMethod" AS ENUM ('TAKEWAY', 'DINE_IN');
+CREATE TYPE "ConsumptionMethod" AS ENUM ('TAKEAWAY', 'DINE_IN');
 
 -- CreateTable
 CREATE TABLE "Restaurant" (
@@ -34,7 +34,7 @@ CREATE TABLE "Product" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "price" DECIMAL(65,30) NOT NULL,
+    "price" DOUBLE PRECISION NOT NULL,
     "imageUrl" TEXT NOT NULL,
     "ingredients" TEXT[],
     "restaurantId" TEXT NOT NULL,
@@ -70,6 +70,9 @@ CREATE TABLE "OrderProduct" (
 
     CONSTRAINT "OrderProduct_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Restaurant_slug_key" ON "Restaurant"("slug");
 
 -- AddForeignKey
 ALTER TABLE "MenuCategory" ADD CONSTRAINT "MenuCategory_restaurantId_fkey" FOREIGN KEY ("restaurantId") REFERENCES "Restaurant"("id") ON DELETE CASCADE ON UPDATE CASCADE;

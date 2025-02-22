@@ -14,14 +14,14 @@ datasource db {
 }
 
 model Restaurant {
-  id             String         @id @default(cuid())
+  id             String         @id @default(uuid())
   name           String
-  slug           String
+  slug           String         @unique
   description    String
   avatarImageUrl String
   coverImageUrl  String
   menuCategories MenuCategory[]
-  prducts        Product[]
+  products       Product[]
   orders         Order[]
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
@@ -41,10 +41,10 @@ model Product {
   id             String         @id @default(uuid())
   name           String
   description    String
-  price          Decimal
+  price          Float
   imageUrl       String
   ingredients    String[]
-  orderProduct   OrderProduct[]
+  orderProducts  OrderProduct[]
   restaurant     Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId   String
   menuCategory   MenuCategory   @relation(fields: [menuCategoryId], references: [id], onDelete: Cascade)
@@ -58,9 +58,9 @@ model Order {
   total             Float
   status            OrderStatus
   consumptionMethod ConsumptionMethod
-  restaurantId      String
   restaurant        Restaurant        @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  orderProduct      OrderProduct[]
+  restaurantId      String
+  orderProducts     OrderProduct[]
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
 }
@@ -84,6 +84,6 @@ enum OrderStatus {
 }
 
 enum ConsumptionMethod {
-  TAKEWAY
+  TAKEAWAY
   DINE_IN
 }
