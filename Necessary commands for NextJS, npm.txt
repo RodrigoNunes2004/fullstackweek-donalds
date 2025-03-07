@@ -1,0 +1,129 @@
+Necessary commands for NextJS, npm and npx packeges, and prisma schema and neonDB
+
+
+Rodrigo@DESKTOP-BVUUJLP MINGW64 ~/OneDrive/Desktop/ecommerceProjectStores/fullstackweek-donalds (master)
+
+$ npx create-next-app@15.1.6 
+npm WARN exec The following package was not found and will be installed: create-next-app@15.1.6
+? Would you like to use TypeScript? » No / YesYes
+√ Would you like to use TypeScript? ... No / Yes
+? Would you like to use ESLint? » No / Yes
+√ Would you like to use ESLint? ... No / Yes
+? Would you like to use Tailwind CSS? » No / Yes
+√ Would you like to use Tailwind CSS? ... No / Yes
+? Would you like your code inside a `src/` directory? » No / Yes
+√ Would you like your code inside a `src/` directory? ... No / Yes
+? Would you like to use App Router? (recommended) » No / Yes
+√ Would you like to use App Router? (recommended) ... No / Yes
+? Would you like to use Turbopack for `next dev`? » No / YesNo
+√ Would you like to use Turbopack for `next dev`? ... No / Yes
+? Would you like to customize the import alias (`@/*` by default)? » No / YesNo
+√ Would you like to customize the import alias (`@/*` by default)? ... No / Yes
+Creating a new Next.js app in C:\Users\Rodrigo\OneDrive\Desktop\ecommerceProjectStores\fullstackweek-donalds.
+
+Using npm.
+
+Initializing project with template: app-tw
+
+
+Installing dependencies:
+- react
+- react-dom
+- next
+
+Installing devDependencies:
+- typescript
+- @types/node
+- @types/react
+- @types/react-dom
+- postcss
+- tailwindcss
+- eslint
+- eslint-config-next
+- @eslint/eslintrc
+
+
+
+added 375 packages, and audited 376 packages in 1m
+
+144 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+Success! Created fullstackweek-donalds at C:\Users\Rodrigo\OneDrive\Desktop\ecommerceProjectStores\fullstackweek-donalds
+
+A new version of `create-next-app` is available!
+You can update by running: npm i -g create-next-app
+
+
+
+interface RestaurantPageProps {
+    params: Promise<{slug: string}>;
+}
+
+const RestaurantPage = async ({params}: RestaurantPageProps) => {
+  const {slug} = await params;
+  return <h1>{slug}</h1>
+};
+
+export default RestaurantPage;
+
+
+
+
+import Image from "next/image";
+import { notFound } from "next/navigation";
+
+import { db } from "@/lib/prisma";
+
+import ConsumptionMethodOption from "./components/consumption-method-option";
+
+
+
+
+interface RestaurantPageProps {
+  params: Promise<{ slug: string }>;
+}
+
+const RestaurantPage = async ({ params }: RestaurantPageProps) => {
+  const { slug } = await params;
+  const restaurant = await db.restaurant.findUnique({ where: { slug } });
+  if (!restaurant) {
+    return notFound();
+  }
+  return (
+    <div className="flex h-screen flex-col items-center justify-center px-6 pt-24">
+      {/* LOGO E TITULO */}
+      <div className="flex flex-col items-center gap-2">
+        <Image
+          src={restaurant.avatarImageUrl}
+          alt={restaurant.name}
+          width={82}
+          height={82}
+        />
+        <h2 className="font-semibold">{restaurant.name}</h2>
+      </div> 
+      {/* BEM VINDO! */}
+      <div className="pt-24 text-center space-y-2">
+        <h3 className="text-2xl font-semibold">
+        Seja bem-vindo!
+        </h3>
+        <p className="opacity-55">
+          Escolha como prefere aproveitar sua refeição. Estamos oferecer praticidade e sabor em cada detalhe!
+        </p>
+      </div>
+        <div className="pt-14 grid grid-cols-2 gap-4">
+          <ConsumptionMethodOption
+          buttonText="Para comer aqui"
+          imageAlt="Comer aqui"
+          imageUrl="/dine_in.png" slug={""} option={"TAKEAWAY"}          />
+          <ConsumptionMethodOption
+          buttonText="Para levar"
+          imageAlt="Para levar"
+          imageUrl="/takeaway.png" slug={""} option={"TAKEAWAY"}          />
+        </div> 
+    </div>  
+  );
+};    
+
+export default RestaurantPage;
