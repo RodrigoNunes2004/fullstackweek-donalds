@@ -127,3 +127,5 @@ const RestaurantPage = async ({ params }: RestaurantPageProps) => {
 };    
 
 export default RestaurantPage;
+
+npx prisma studio  ---> will check for products adding to the datrabase
