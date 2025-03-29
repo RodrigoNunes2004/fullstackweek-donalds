@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\prisma",
+    "\\prisma\\migrations",
+    "\\prisma\\migrations\\20250222013459_add_initial_tables"
+  ],
+  "SelectedNode": "\\prisma\\migrations\\20250222013459_add_initial_tables\\migration.sql",
+  "PreviewInSolutionExplorer": false
+}

@@ -14,21 +14,24 @@ import { CartContext } from "../contexts/cart";
 import CartProductItem from "./cart-product-item";
 import FinishOrderDialog from "./finish-order-dialog";
 
-
 const CartSheet = () => {
-  const [finishOrderDialogiIsOpen, setFinishOrderDialogIsOpen] = useState(false);
+  const [finishOrderDialogIsOpen, setFinishOrderDialogIsOpen] = useState(false);
   const { isOpen, toggleCart, products, total } = useContext(CartContext);
   return (
     <Sheet open={isOpen} onOpenChange={toggleCart}>
-      <SheetContent className="w-[80%]">
+      <SheetContent className="w-[80%]" aria-label="Carrinho de compras"> 
         <SheetHeader>
           <SheetTitle className="text-left">Sacola</SheetTitle>
         </SheetHeader>
         <div className="flex h-full flex-col py-5">
           <div className="flex-auto">
-            {products.map((product) => (
-              <CartProductItem key={product.id} product={product} />
-            ))}
+            {products.length === 0 ? (
+              <p>Seu carrinho está vazio.</p>
+            ) : (
+              products.map((product) => (
+                <CartProductItem key={product.id} product={product} />
+              ))
+            )}
           </div>
           <Card className="mb-6">
             <CardContent className="p-5">
@@ -38,16 +41,15 @@ const CartSheet = () => {
               </div>
             </CardContent>
           </Card>
-          <Button 
-          className="w-full rounded-full" 
-          onClick={() => setFinishOrderDialogIsOpen(true)
-          }
+          <Button
+            className="w-full rounded-full"
+            onClick={() => setFinishOrderDialogIsOpen(true)}
           >
-           finalizar pedido
+            Finalizar pedido
           </Button>
-          <FinishOrderDialog 
-           open={finishOrderDialogiIsOpen}
-           onOpenChange={setFinishOrderDialogIsOpen}
+          <FinishOrderDialog
+            open={finishOrderDialogIsOpen}
+            onOpenChange={setFinishOrderDialogIsOpen}
           />
         </div>
       </SheetContent>

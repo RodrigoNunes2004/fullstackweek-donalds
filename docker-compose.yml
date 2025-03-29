@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  web:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://neondb_owner:npg_THPYFL7Wrk3f@ep-round-resonance-a7xfx8nf-pooler.ap-southeast-2.aws.neon.tech/neondb?sslmode=require
+      - STRIPE_SECRET_KEY=sk_test_...
+      - NEXT_PUBLIC_STRIPE_PUBLIC_KEY=pk_test_...
+    volumes:
+      - .:/app
+
+  stripe-cli:
+    image: stripe/stripe-cli
+    command: listen --forward-to http://host.docker.internal:3000/webhook
+    environment:
+      - STRIPE_SECRET_KEY=sk_test_...
+    depends_on:
+      - web
+
+volumes:
+  pg_data:
