@@ -1,27 +1,30 @@
 import { db } from "@/lib/prisma";
 
-import { isValidCpf, removeCpfPunctuation } from "../menu/helpers/cpf";
-import CpfForm from "./components/cpf-form";
+import NameForm from "./components/cpf-form";
 import OrderList from "./components/order-list";
 
 interface OrdersPageProps {
-  searchParams: Promise<{ cpf: string }>;
+  searchParams: Promise<{ name: string }>;
 }
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const OrdersPage = async ({ searchParams }: OrdersPageProps) => {
-  const { cpf } = await searchParams;
-  if (!cpf) {
-    return <CpfForm />;
+  const { name } = await searchParams;
+  if (!name || name.trim() === "") {
+    return <NameForm />;
   }
-  if (!isValidCpf(cpf)) {
-    return <CpfForm />;
-  }
+  const decodedName = decodeURIComponent(name.trim());
   const orders = await db.order.findMany({
     orderBy: {
       createdAt: "desc",
     },
     where: {
-      customerCpf: removeCpfPunctuation(cpf),
+      customerName: {
+        equals: decodedName,
+        mode: "insensitive",
+      },
     },
     include: {
       restaurant: {

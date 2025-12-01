@@ -23,17 +23,23 @@ export async function POST(request: Request) {
   const text = await request.text();
   const event = stripe.webhooks.constructEvent(text, signature, webhookSecret);
 
-  switch (event.type) {
-    case "checkout.session.completed": {
-      const orderId = event.data.object.metadata?.orderId;
-      if (!orderId) {
-        return NextResponse.json({
-          received: true,
-        });
+  if (event.type === "checkout.session.completed") {
+    const orderId = event.data.object.metadata?.orderId;
+    if (!orderId) {
+      console.error("No orderId in metadata for checkout.session.completed");
+      return NextResponse.json({
+        received: true,
+        error: "No orderId in metadata",
+      });
+    }
+    try {
+      const parsedOrderId = parseInt(String(orderId), 10);
+      if (isNaN(parsedOrderId)) {
+        throw new Error(`Invalid orderId: ${orderId}`);
       }
       const order = await db.order.update({
         where: {
-          id: Number(orderId),
+          id: parsedOrderId,
         },
         data: {
           status: "PAYMENT_CONFIRMED",
@@ -46,20 +52,35 @@ export async function POST(request: Request) {
           },
         },
       });
-      revalidatePath(`/${order.restaurant.slug}/orders`);
-      break;
+      // Revalidate the orders page - this will refresh all variations
+      revalidatePath(`/${order.restaurant.slug}/orders`, "page");
+      // Also revalidate the layout to ensure cache is cleared
+      revalidatePath(`/${order.restaurant.slug}`, "layout");
+      console.log(`Order ${parsedOrderId} updated to PAYMENT_CONFIRMED for restaurant ${order.restaurant.slug}`);
+    } catch (error) {
+      console.error(`Error updating order ${orderId}:`, error);
+      return NextResponse.json({
+        received: true,
+        error: "Failed to update order",
+      }, { status: 500 });
     }
-
-    case "charge.failed": {
-      const orderId = event.data.object.metadata?.orderId;
-      if (!orderId) {
-        return NextResponse.json({
-          received: true,
-        });
+  } else if (event.type === "charge.failed") {
+    const orderId = event.data.object.metadata?.orderId;
+    if (!orderId) {
+      console.error("No orderId in metadata for charge.failed");
+      return NextResponse.json({
+        received: true,
+        error: "No orderId in metadata",
+      });
+    }
+    try {
+      const parsedOrderId = parseInt(String(orderId), 10);
+      if (isNaN(parsedOrderId)) {
+        throw new Error(`Invalid orderId: ${orderId}`);
       }
       const order = await db.order.update({
         where: {
-          id: Number(orderId),
+          id: parsedOrderId,
         },
         data: {
           status: "PAYMENT_FAILED",
@@ -72,8 +93,15 @@ export async function POST(request: Request) {
           },
         },
       });
-      revalidatePath(`/${order.restaurant.slug}/orders`);
-      break;
+      revalidatePath(`/${order.restaurant.slug}/orders`, "page");
+      revalidatePath(`/${order.restaurant.slug}`, "layout");
+      console.log(`Order ${parsedOrderId} updated to PAYMENT_FAILED for restaurant ${order.restaurant.slug}`);
+    } catch (error) {
+      console.error(`Error updating order ${orderId}:`, error);
+      return NextResponse.json({
+        received: true,
+        error: "Failed to update order",
+      }, { status: 500 });
     }
   }
 

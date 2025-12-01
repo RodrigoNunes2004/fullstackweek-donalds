@@ -11,7 +11,7 @@ const main = async () => {
       data: {
         name: "FSW Donalds",
         slug: "fsw-donalds",
-        description: "O melhor fast food do mundo",
+        description: "The best fast food in the world",
         avatarImageUrl:
           "https://u9a6wmr3as.ufs.sh/f/jppBrbk0cChQvcNP9rHlEJu1vCY5kLqzjf29HKaeN78Z6pRy",
         coverImageUrl:
@@ -27,85 +27,85 @@ const main = async () => {
     await tx.product.createMany({
       data: [
         {
-          name: "McOferta Média Big Mac Duplo",
+          name: "Medium Big Mac Double Combo",
           description:
-            "Quatro hambúrgueres (100% carne bovina), alface americana, queijo fatiado sabor cheddar, molho especial, cebola, picles e pão com gergilim, acompanhamento e bebida.",
+            "Four hamburgers (100% beef), American lettuce, cheddar cheese slices, special sauce, onion, pickles and sesame seed bun, side and drink.",
           price: 39.9,
           imageUrl:
             "https://u9a6wmr3as.ufs.sh/f/jppBrbk0cChQaHB8tslkBUjlHSKiuseLm2hIFzVY0OtxEPnw",
           menuCategoryId: combosCategory.id,
           restaurantId: restaurant.id,
           ingredients: [
-            "Pão com gergilim",
-            "Hambúrguer de carne 100% bovina",
-            "Alface americana",
-            "Queijo fatiado sabor cheddar",
-            "Molho especial",
-            "Cebola",
-            "Picles",
+            "Sesame seed bun",
+            "100% beef hamburger",
+            "American lettuce",
+            "Cheddar cheese slices",
+            "Special sauce",
+            "Onion",
+            "Pickles",
           ],
         },
         {
-          name: "Novo Brabo Melt Onion Rings",
+          name: "New Awesome Melt Onion Rings",
           description:
-            "Dois hambúrgueres de carne 100% bovina, méquinese, a exclusiva maionese especial com sabor de carne defumada, onion rings, fatias de bacon, queijo processado sabor cheddar, o delicioso molho lácteo com queijo tipo cheddar tudo isso no pão tipo brioche trazendo uma explosão de sabores pros seus dias de glória! Acompanhamento e Bebida.",
+            "Two 100% beef hamburgers, special sauce, exclusive special mayonnaise with smoked meat flavor, onion rings, bacon slices, processed cheddar cheese, delicious dairy sauce with cheddar cheese all on a brioche bun bringing an explosion of flavors to your glorious days! Side and Drink.",
           price: 41.5,
           imageUrl:
             "https://u9a6wmr3as.ufs.sh/f/jppBrbk0cChQeGQofnEPyQaHEV2WL8rGUs41oMICtYfNkphl",
           menuCategoryId: combosCategory.id,
           restaurantId: restaurant.id,
           ingredients: [
-            "Pão tipo brioche",
-            "Hambúrguer de carne 100% bovina",
-            "Méquinese",
-            "Maionese especial com sabor de carne defumada",
+            "Brioche bun",
+            "100% beef hamburger",
+            "Special sauce",
+            "Special mayonnaise with smoked meat flavor",
             "Onion rings",
-            "Fatias de bacon",
-            "Queijo processado sabor cheddar",
-            "Molho lácteo com queijo tipo cheddar",
+            "Bacon slices",
+            "Processed cheddar cheese",
+            "Dairy sauce with cheddar cheese",
           ],
         },
         {
           name: "McCrispy Chicken Elite",
           description:
-            "Composto por pão tipo brioche com batata, molho Honey&Fire, bacon em fatias, alface, tomate, queijo sabor cheddar e carne 100% de peito de frango, temperada e empanada, acompanhamento e bebida.",
+            "Made with brioche bun with potato, Honey&Fire sauce, sliced bacon, lettuce, tomato, cheddar cheese and 100% chicken breast, seasoned and breaded, side and drink.",
           price: 39.9,
           imageUrl:
             "https://u9a6wmr3as.ufs.sh/f/jppBrbk0cChQr12aTqPo3SsGjBJCaM7yhxnbDlXeL5N9dckv",
           menuCategoryId: combosCategory.id,
           restaurantId: restaurant.id,
           ingredients: [
-            "Pão tipo brioche",
-            "Batata",
-            "Molho Honey&Fire",
-            "Bacon em fatias",
-            "Alface",
-            "Tomate",
-            "Queijo sabor cheddar",
-            "Carne 100% de peito de frango",
+            "Brioche bun",
+            "Potato",
+            "Honey&Fire sauce",
+            "Sliced bacon",
+            "Lettuce",
+            "Tomato",
+            "Cheddar cheese",
+            "100% chicken breast",
           ],
         },
         {
-          name: "Duplo Cheddar McMelt",
+          name: "Double Cheddar McMelt",
           description:
-            "Dois hambúrgueres (100% carne bovina), molho lácteo com queijo tipo cheddar, cebola ao molho shoyu e pão escuro com gergelim, acompanhamento e bebida.",
+            "Two hamburgers (100% beef), dairy sauce with cheddar cheese, onion with soy sauce and dark sesame bun, side and drink.",
           price: 36.2,
           imageUrl:
             "https://u9a6wmr3as.ufs.sh/f/jppBrbk0cChQWdq0w8niS9XCLQu7Nb4jvBYZze16goaOqsKR",
           menuCategoryId: combosCategory.id,
           restaurantId: restaurant.id,
           ingredients: [
-            "Pão escuro com gergelim",
-            "Hambúrguer de carne 100% bovina",
-            "Molho lácteo com queijo tipo cheddar",
-            "Cebola ao molho shoyu",
+            "Dark sesame bun",
+            "100% beef hamburger",
+            "Dairy sauce with cheddar cheese",
+            "Onion with soy sauce",
           ],
         },
       ],
     });
     const hamburguersCategory = await tx.menuCategory.create({
       data: {
-        name: "Lanches",
+        name: "Burgers",
         restaurantId: restaurant.id,
       },
     });
@@ -114,15 +114,15 @@ const main = async () => {
         {
           name: "Big Mac",
           description:
-            "Quatro hambúrgueres (100% carne bovina), alface americana, queijo fatiado sabor cheddar, molho especial, cebola, picles e pão com gergilim, acompanhamento e bebida.",
+            "Four hamburgers (100% beef), American lettuce, cheddar cheese slices, special sauce, onion, pickles and sesame seed bun, side and drink.",
           ingredients: [
-            "Pão com gergilim",
-            "Hambúrguer de carne 100% bovina",
-            "Alface americana",
-            "Queijo fatiado sabor cheddar",
-            "Molho especial",
-            "Cebola",
-            "Picles",
+            "Sesame seed bun",
+            "100% beef hamburger",
+            "American lettuce",
+            "Cheddar cheese slices",
+            "Special sauce",
+            "Onion",
+            "Pickles",
           ],
           price: 39.9,
           imageUrl:
@@ -131,18 +131,18 @@ const main = async () => {
           restaurantId: restaurant.id,
         },
         {
-          name: "Duplo Quarterão",
+          name: "Double Quarter Pounder",
           description:
-            "Dois hambúrgueres de carne 100% bovina, méquinese, a exclusiva maionese especial com sabor de carne defumada, onion rings, fatias de bacon, queijo processado sabor cheddar, o delicioso molho lácteo com queijo tipo cheddar tudo isso no pão tipo brioche trazendo uma explosão de sabores pros seus dias de glória! Acompanhamento e Bebida.",
+            "Two 100% beef hamburgers, special sauce, exclusive special mayonnaise with smoked meat flavor, onion rings, bacon slices, processed cheddar cheese, delicious dairy sauce with cheddar cheese all on a brioche bun bringing an explosion of flavors to your glorious days! Side and Drink.",
           ingredients: [
-            "Pão tipo brioche",
-            "Hambúrguer de carne 100% bovina",
-            "Méquinese",
-            "Maionese especial com sabor de carne defumada",
+            "Brioche bun",
+            "100% beef hamburger",
+            "Special sauce",
+            "Special mayonnaise with smoked meat flavor",
             "Onion rings",
-            "Fatias de bacon",
-            "Queijo processado sabor cheddar",
-            "Molho lácteo com queijo tipo cheddar",
+            "Bacon slices",
+            "Processed cheddar cheese",
+            "Dairy sauce with cheddar cheese",
           ],
           price: 41.5,
           imageUrl:
@@ -153,16 +153,16 @@ const main = async () => {
         {
           name: "McMelt",
           description:
-            "Composto por pão tipo brioche com batata, molho Honey&Fire, bacon em fatias, alface, tomate, queijo sabor cheddar e carne 100% de peito de frango, temperada e empanada, acompanhamento e bebida.",
+            "Made with brioche bun with potato, Honey&Fire sauce, sliced bacon, lettuce, tomato, cheddar cheese and 100% chicken breast, seasoned and breaded, side and drink.",
           ingredients: [
-            "Pão tipo brioche",
-            "Batata",
-            "Molho Honey&Fire",
-            "Bacon em fatias",
-            "Alface",
-            "Tomate",
-            "Queijo sabor cheddar",
-            "Carne 100% de peito de frango",
+            "Brioche bun",
+            "Potato",
+            "Honey&Fire sauce",
+            "Sliced bacon",
+            "Lettuce",
+            "Tomato",
+            "Cheddar cheese",
+            "100% chicken breast",
           ],
           price: 39.9,
           imageUrl:
@@ -171,14 +171,14 @@ const main = async () => {
           restaurantId: restaurant.id,
         },
         {
-          name: "McNífico Bacon",
+          name: "McAwesome Bacon",
           description:
-            "Dois hambúrgueres (100% carne bovina), molho lácteo com queijo tipo cheddar, cebola ao molho shoyu e pão escuro com gergelim, acompanhamento e bebida.",
+            "Two hamburgers (100% beef), dairy sauce with cheddar cheese, onion with soy sauce and dark sesame bun, side and drink.",
           ingredients: [
-            "Pão escuro com gergelim",
-            "Hambúrguer de carne 100% bovina",
-            "Molho lácteo com queijo tipo cheddar",
-            "Cebola ao molho shoyu",
+            "Dark sesame bun",
+            "100% beef hamburger",
+            "Dairy sauce with cheddar cheese",
+            "Onion with soy sauce",
           ],
           price: 36.2,
           imageUrl:
@@ -190,15 +190,15 @@ const main = async () => {
     });
     const frenchFriesCategory = await tx.menuCategory.create({
       data: {
-        name: "Fritas",
+        name: "Fries",
         restaurantId: restaurant.id,
       },
     });
     await tx.product.createMany({
       data: [
         {
-          name: "Fritas Grande",
-          description: "Batatas fritas crocantes e sequinhas. Vem bastante!",
+          name: "Large Fries",
+          description: "Crispy and golden french fries. Comes in a large portion!",
           ingredients: [],
           price: 10.9,
           imageUrl:
@@ -207,9 +207,9 @@ const main = async () => {
           restaurantId: restaurant.id,
         },
         {
-          name: "Fritas Média",
+          name: "Medium Fries",
           description:
-            "Batatas fritas crocantes e sequinhas. Vem uma média quantidade!",
+            "Crispy and golden french fries. Comes in a medium portion!",
           ingredients: [],
           price: 9.9,
           imageUrl:
@@ -218,9 +218,9 @@ const main = async () => {
           restaurantId: restaurant.id,
         },
         {
-          name: "Fritas Pequena",
+          name: "Small Fries",
           description:
-            "Batatas fritas crocantes e sequinhas. Vem pouquinho (é bom pra sua dieta)!",
+            "Crispy and golden french fries. Comes in a small portion (good for your diet)!",
           ingredients: [],
           price: 5.9,
           imageUrl:
@@ -232,7 +232,7 @@ const main = async () => {
     });
     const drinksCategory = await tx.menuCategory.create({
       data: {
-        name: "Bebidas",
+        name: "Drinks",
         restaurantId: restaurant.id,
       },
     });
@@ -240,7 +240,7 @@ const main = async () => {
       data: [
         {
           name: "Coca-cola",
-          description: "Coca-cola gelada para acompanhar seu lanche.",
+          description: "Ice-cold Coca-cola to accompany your meal.",
           ingredients: [],
           price: 5.9,
           imageUrl:
@@ -249,8 +249,8 @@ const main = async () => {
           restaurantId: restaurant.id,
         },
         {
-          name: "Fanta Laranja",
-          description: "Fanta Laranja gelada para acompanhar seu lanche.",
+          name: "Fanta Orange",
+          description: "Ice-cold Fanta Orange to accompany your meal.",
           ingredients: [],
           price: 5.9,
           imageUrl:
@@ -259,8 +259,8 @@ const main = async () => {
           restaurantId: restaurant.id,
         },
         {
-          name: "Água Mineral",
-          description: "A bebida favorita do Cristiano Ronaldo.",
+          name: "Mineral Water",
+          description: "Cristiano Ronaldo's favorite drink.",
           ingredients: [],
           price: 2.9,
           imageUrl:
@@ -272,15 +272,15 @@ const main = async () => {
     });
     const desertsCategory = await tx.menuCategory.create({
       data: {
-        name: "Sobremesas",
+        name: "Desserts",
         restaurantId: restaurant.id,
       },
     });
     await tx.product.createMany({
       data: [
         {
-          name: "Casquinha de Baunilha",
-          description: "Casquinha de sorvete sabor baunilha.",
+          name: "Vanilla Cone",
+          description: "Ice cream cone with vanilla flavor.",
           ingredients: [],
           price: 3.9,
           imageUrl:
@@ -289,8 +289,8 @@ const main = async () => {
           restaurantId: restaurant.id,
         },
         {
-          name: "Casquinha de Chocolate",
-          description: "Casquinha de sorvete sabor chocolate.",
+          name: "Chocolate Cone",
+          description: "Ice cream cone with chocolate flavor.",
           ingredients: [],
           price: 3.9,
           imageUrl:
@@ -299,8 +299,8 @@ const main = async () => {
           restaurantId: restaurant.id,
         },
         {
-          name: "Casquinha de Mista",
-          description: "Casquinha de sorvete sabor baunilha e chocolate.",
+          name: "Mixed Cone",
+          description: "Ice cream cone with vanilla and chocolate flavor.",
           ingredients: [],
           price: 2.9,
           imageUrl:

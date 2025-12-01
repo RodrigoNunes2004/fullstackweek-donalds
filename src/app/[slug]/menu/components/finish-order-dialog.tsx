@@ -7,7 +7,6 @@ import { Loader2Icon } from "lucide-react";
 import { useParams, useSearchParams } from "next/navigation";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { PatternFormat } from "react-number-format";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -34,21 +33,11 @@ import { Input } from "@/components/ui/input";
 import { createOrder } from "../actions/create-order";
 import { createStripeCheckout } from "../actions/create-stripe-checkout";
 import { CartContext } from "../contexts/cart";
-import { isValidCpf } from "../helpers/cpf";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, {
-    message: "O nome é obrigatório.",
+    message: "Name is required.",
   }),
-  cpf: z
-    .string()
-    .trim()
-    .min(1, {
-      message: "O CPF é obrigatório.",
-    })
-    .refine((value) => isValidCpf(value), {
-      message: "CPF inválido.",
-    }),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
@@ -67,7 +56,6 @@ const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      cpf: "",
     },
     shouldUnregister: true,
   });
@@ -80,7 +68,6 @@ const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
 
       const order = await createOrder({
         consumptionMethod,
-        customerCpf: data.cpf,
         customerName: data.name,
         products,
         slug,
@@ -90,7 +77,6 @@ const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
         orderId: order.id,
         slug,
         consumptionMethod,
-        cpf: data.cpf,
       });
       if (!process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY) return;
       const stripe = await loadStripe(
@@ -110,9 +96,9 @@ const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
       <DrawerTrigger asChild></DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Finalizar Pedido</DrawerTitle>
+          <DrawerTitle>Complete Order</DrawerTitle>
           <DrawerDescription>
-            Insira suas informações abaixo para finalizar o seu pedido.
+            Enter your information below to complete your order.
           </DrawerDescription>
         </DrawerHeader>
         <div className="p-5">
@@ -123,27 +109,9 @@ const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Seu nome</FormLabel>
+                    <FormLabel>Your name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite seu nome..." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="cpf"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Seu CPF</FormLabel>
-                    <FormControl>
-                      <PatternFormat
-                        placeholder="Digite seu CPF..."
-                        format="###.###.###-##"
-                        customInput={Input}
-                        {...field}
-                      />
+                      <Input placeholder="Enter your name..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -158,11 +126,11 @@ const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
                   disabled={isLoading}
                 >
                   {isLoading && <Loader2Icon className="animate-spin" />}
-                  Finalizar
+                  Complete Order
                 </Button>
                 <DrawerClose asChild>
                   <Button className="w-full rounded-full" variant="outline">
-                    Cancelar
+                    Cancel
                   </Button>
                 </DrawerClose>
               </DrawerFooter>

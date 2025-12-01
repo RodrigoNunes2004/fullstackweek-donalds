@@ -19,19 +19,15 @@ const CartSheet = () => {
   const { isOpen, toggleCart, products, total } = useContext(CartContext);
   return (
     <Sheet open={isOpen} onOpenChange={toggleCart}>
-      <SheetContent className="w-[80%]" aria-label="Carrinho de compras"> 
+      <SheetContent className="w-[80%]">
         <SheetHeader>
-          <SheetTitle className="text-left">Sacola</SheetTitle>
+          <SheetTitle className="text-left">Cart</SheetTitle>
         </SheetHeader>
         <div className="flex h-full flex-col py-5">
           <div className="flex-auto">
-            {products.length === 0 ? (
-              <p>Seu carrinho está vazio.</p>
-            ) : (
-              products.map((product) => (
-                <CartProductItem key={product.id} product={product} />
-              ))
-            )}
+            {products.map((product) => (
+              <CartProductItem key={product.id} product={product} />
+            ))}
           </div>
           <Card className="mb-6">
             <CardContent className="p-5">
@@ -45,7 +41,7 @@ const CartSheet = () => {
             className="w-full rounded-full"
             onClick={() => setFinishOrderDialogIsOpen(true)}
           >
-            Finalizar pedido
+            Complete Order
           </Button>
           <FinishOrderDialog
             open={finishOrderDialogIsOpen}

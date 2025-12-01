@@ -5,11 +5,8 @@ import { revalidatePath } from "next/cache";
 
 import { db } from "@/lib/prisma";
 
-import { removeCpfPunctuation } from "../helpers/cpf";
-
 interface CreateOrderInput {
   customerName: string;
-  customerCpf: string;
   products: Array<{
     id: string;
     quantity: number;
@@ -43,7 +40,7 @@ export const createOrder = async (input: CreateOrderInput) => {
     data: {
       status: "PENDING",
       customerName: input.customerName,
-      customerCpf: removeCpfPunctuation(input.customerCpf),
+      customerCpf: "", // CPF is optional, using empty string as default
       orderProducts: {
         createMany: {
           data: productsWithPricesAndQuantities,

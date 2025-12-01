@@ -92,9 +92,9 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           </div>
 
           <ScrollArea className="h-full">
-            {/* SOBRE */}
+            {/* ABOUT */}
             <div className="mt-6 space-y-3">
-              <h4 className="font-semibold">Sobre</h4>
+              <h4 className="font-semibold">About</h4>
               <p className="text-sm text-muted-foreground">
                 {product.description}
               </p>
@@ -104,7 +104,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             <div className="mt-6 space-y-3">
               <div className="5 flex items-center gap-1">
                 <ChefHatIcon size={18} />
-                <h4 className="font-semibold">Ingredientes</h4>
+                <h4 className="font-semibold">Ingredients</h4>
               </div>
               <ul className="text-muted-fo list-disc px-5 text-sm text-muted-foreground">
                 {product.ingredients.map((ingredient) => (
@@ -116,7 +116,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
         </div>
 
         <Button className="w-full rounded-full" onClick={handleAddToCart}>
-          Adicionar à sacola
+          Add to Cart
         </Button>
       </div>
       <CartSheet />
