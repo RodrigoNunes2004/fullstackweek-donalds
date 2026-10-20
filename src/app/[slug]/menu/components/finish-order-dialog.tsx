@@ -78,15 +78,25 @@ const FinishOrderDialog = ({ open, onOpenChange }: FinishOrderDialogProps) => {
         slug,
         consumptionMethod,
       });
-      if (!process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY) return;
+      if (!process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY) {
+        console.error("Missing NEXT_PUBLIC_STRIPE_PUBLIC_KEY environment variable");
+        alert("Payment configuration error. Please contact support.");
+        return;
+      }
       const stripe = await loadStripe(
         process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY,
       );
-      stripe?.redirectToCheckout({
+      if (!stripe) {
+        console.error("Failed to load Stripe");
+        alert("Failed to initialize payment. Please try again.");
+        return;
+      }
+      stripe.redirectToCheckout({
         sessionId: sessionId,
       });
     } catch (error) {
-      console.error(error);
+      console.error("Order submission error:", error);
+      alert("An error occurred while processing your order. Please try again.");
     } finally {
       setIsLoading(false);
     }
